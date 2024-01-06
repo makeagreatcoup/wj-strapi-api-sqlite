@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_elements_inputs",
+  "info": {
+    "displayName": "input",
+    "icon": "pencil"
+  },
+  "options": {},
+  "attributes": {
+    "placeholder": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "inputType": {
+      "type": "string"
+    }
+  }
+}
