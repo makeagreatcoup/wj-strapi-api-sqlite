@@ -926,6 +926,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       'oneToMany',
       'api::category.category'
     >;
+    slug: Attribute.UID<'api::category.category', 'name'> & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -999,9 +1000,11 @@ export interface ApiProjectProject extends Schema.CollectionType {
     website: Attribute.String;
     tags: Attribute.Relation<
       'api::project.project',
-      'oneToMany',
+      'manyToMany',
       'api::tag.tag'
     >;
+    slug: Attribute.UID<'api::project.project', 'name'> & Attribute.Required;
+    images: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1065,6 +1068,12 @@ export interface ApiTagTag extends Schema.CollectionType {
     name: Attribute.String;
     color: Attribute.String;
     state: Attribute.Boolean & Attribute.DefaultTo<false>;
+    slug: Attribute.UID<'api::tag.tag', 'name'> & Attribute.Required;
+    projects: Attribute.Relation<
+      'api::tag.tag',
+      'manyToMany',
+      'api::project.project'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::user'> &
