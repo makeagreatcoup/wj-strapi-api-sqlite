@@ -1005,6 +1005,7 @@ export interface ApiProjectProject extends Schema.CollectionType {
     >;
     slug: Attribute.UID<'api::project.project', 'name'> & Attribute.Required;
     images: Attribute.Media;
+    body: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
