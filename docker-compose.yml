@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  strapi:
+    build: .
+    env_file:
+      - ./.env
+    # environment:
+    #   DATABASE_FILENAME: .tmp/data.db
+    volumes:
+      - ./data:/app/.tmp
+      - ./public/uploads:/app/public/uploads
+    ports:
+      - "1380:1337"
+    # expose:  # 不需要映射到宿主机，仅在容器内部暴露端口供Nginx代理
+    #   - "3000"
+    networks:
+      default:  # 添加到默认网络
+
+networks:
+  default:  # 默认网络（Docker Compose会自动创建）
