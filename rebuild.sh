@@ -47,8 +47,8 @@ echo -e "${GREEN}✅ 镜像已删除${NC}"
 echo ""
 
 # 3. 重新构建镜像
-echo -e "${YELLOW}[3/4] 重新构建镜像（可能需要几分钟）...${NC}"
-docker-compose build --no-cache
+echo -e "${YELLOW}[3/4] 重新构建镜像（使用缓存加速）...${NC}"
+docker-compose build
 if [ $? -ne 0 ]; then
     echo -e "${RED}❌ 镜像构建失败${NC}"
     exit 1

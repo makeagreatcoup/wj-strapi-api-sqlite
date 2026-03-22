@@ -7,30 +7,22 @@ WORKDIR /app
 # 增加Node.js堆大小限制
 ENV NODE_OPTIONS=--max-old-space-size=4096
 
-# 复制package.json和package-lock.json（或npm-shrinkwrap.json）以便安装依赖
+# 先只复制 package 文件（利用 Docker 缓存）
 COPY package*.json ./
 
+# 配置 npm 镜像并安装依赖
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm config set strict-ssl false && \
+    npm ci --legacy-peer-deps
 
-# 安装依赖包
-RUN npm config set registry https://registry.npmmirror.com
-RUN npm config set strict-ssl false
-
-RUN npm i --legacy-peer-deps
-
-# 将当前目录内容复制到容器的工作目录中
+# 复制项目代码（只在代码变化时重新构建）
 COPY . .
 
-# 如果项目使用TypeScript，则添加编译步骤
+# 构建项目
 RUN npm run build
-
-# 清理不必要的文件，尤其是开发依赖
-# RUN rm -rf node_modules && npm ci --only=production
 
 # 暴露端口
 # EXPOSE 3000
- 
-# 设置环境变量（如果需要）
-# ENV NODE_ENV=development
 
 # 启动应用
 CMD ["npm", "run", "develop"]
